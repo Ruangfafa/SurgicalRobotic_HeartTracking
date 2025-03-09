@@ -1,4 +1,4 @@
-function t = HaplyInverse3_writeline(haply,command,data)
+function t = HaplyInverse3_writeline(device,command)
     switch command
         case "GetPos"
             %-0.05~0.135,-0.1~-0.2,0~0.3
@@ -7,7 +7,7 @@ function t = HaplyInverse3_writeline(haply,command,data)
             t = [max(haply_workSpace(1,1), min(haply_workSpace(1,2), pos(1))),max(haply_workSpace(2,1), min(haply_workSpace(2,2), pos(2))),max(haply_workSpace(3,1), min(haply_workSpace(3,2), pos(3)))];
 
         case "GetVel"
-            [pos, vel] = haply.EndEffectorForce(zeros(3,1));
+            [pos, vel] = device.EndEffectorForce(zeros(3,1));
             t = vel;
 
         case "DoZero"

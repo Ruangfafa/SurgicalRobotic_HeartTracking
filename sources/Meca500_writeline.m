@@ -1,6 +1,7 @@
-function t = Meca500_writeline(meca,command,data)
+function t = Meca500_writeline(device,command,data)
     switch command
         case "MovePose"
+
             input = sprintf("MovePose(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
             writeline(meca, input);
             t = 1;
@@ -18,16 +19,16 @@ function t = Meca500_writeline(meca,command,data)
         case "SetJointVel"
             if data <= 100 && data > 0
                 input = sprintf("SetJointVel(%f)", data);
-                writeline(meca, input);
+                writeline(device, input);
             else
                 input = sprintf("SetJointVel(%f)", data);
-                writeline(meca, input);
+                writeline(device, input);
             end
             t = data;
 
         case "GetPose"
-            writeline(meca, "GetPose");
-            message = readline(meca); %return as string format: "[2026][x,y,z,α,β,γ]"
+            writeline(device, "GetPose");
+            message = readline(device); %return as string format: "[2026][x,y,z,α,β,γ]"
             message_str = extractBetween(message, "[", "]");
             pose = str2num(message_str{2});
             switch data

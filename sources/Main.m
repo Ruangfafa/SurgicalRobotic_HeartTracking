@@ -42,6 +42,7 @@ while isvalid(controlPanel)
     
     if meca_moveX || meca_moveY || meca_moveZ
         Meca500_writeline(meca, "MoveLinRelWRF", [meca_moveX, meca_moveY, meca_moveZ, 0, 0, 0]);
+
     end
 
     if haply_meca_doZero
