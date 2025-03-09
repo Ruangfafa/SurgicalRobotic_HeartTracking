@@ -1,13 +1,19 @@
 function t = Meca500_writeline(meca,command,data)
     switch command
         case "MovePose"
-            if (data(3) <= 366 && data(3) >= 40) %Keep a save range for z_axis_WRF
-                input = sprintf("MovePose(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
-                writeline(meca, input);
-                t = 1;
-            else
-                t = 0;
-            end
+            input = sprintf("MovePose(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
+            writeline(meca, input);
+            t = 1;
+
+        case "MoveLinRelWRF"
+            input = sprintf("MoveLinRelWRF(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
+            writeline(meca, input);
+            t = 1;
+
+        case "MoveLinRelTRF"
+            input = sprintf("MoveLinRelTRF(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
+            writeline(meca, input);
+            t = 1;
 
         case "SetJointVel"
             if data <= 100 && data > 0
@@ -40,6 +46,9 @@ function t = Meca500_writeline(meca,command,data)
                 otherwise
                     t = pose;
             end
+
+        case "DoZero"
+            writeline(meca,'MovePose(190,0,358,0,90,90)');
 
         otherwise
             error("Meca500: Unknown command %s%s%s (Meca500_writeline.m)", char(34), command, char(34));
