@@ -12,10 +12,19 @@ global meca_moveY;
 meca_moveY = 0; %1 / 0 / -1; Control the Meca500 moving on Y-axis.
 
 global meca_moveZ;
-meca_moveY = 0; %1 / 0 / -1; Control the Meca500 moving on Z-axis.
+meca_moveZ = 0; %1 / 0 / -1; Control the Meca500 moving on Z-axis.
+
+global meca_moveZSpeed;
+meca_moveZSpeed = 5; %int; Define the Meca500 moving speed in Z-axis.
+
+global meca_rangefinder_zAxisRelativelyStill;
+meca_rangefinder_zAxisRelativelyStill = false; %True / False; Define the Meca500 will moving relatively still than the heart is z-axis.
 
 global haply_meca_moveOption;
 haply_meca_moveOption = false; %True / False; Define the Meca500 is moving or not relating on Inverse3.
+
+global haply_meca_constraint;
+haply_meca_constraint = false; %True / False; Define the Meca500 is moving with a given constraint, otherwise follow the tooltip.
 
 global haply_meca_doZero;
 haply_meca_doZero = false; %True / False; To zero the Meca500 joints and Inverse3.
@@ -37,12 +46,19 @@ controlPanel = figure('Name', 'Press any key to start', 'NumberTitle', 'off'); %
 pause = waitforbuttonpress; %Press to mark & start
 
 while isvalid(controlPanel)
-    if haply_meca_moveOption
+    if haply_meca_moveOption && haply_meca_constraint
+    end
+
+    if haply_meca_moveOption && ~haply_meca_constraint
     end
     
-    if meca_moveX || meca_moveY || meca_moveZ
-        Meca500_writeline(meca, "MoveLinRelWRF", [meca_moveX, meca_moveY, meca_moveZ, 0, 0, 0]);
+    if (meca_moveX || meca_moveY) && ~haply_meca_moveOption
+        haply_meca_constraint = false;
+        Meca500_writeline(meca, "MoveLinRelWRF", [meca_moveX, meca_moveY, 0, 0, 0, 0]);
+    end
 
+    if meca_moveZ
+        Meca500_writeline(meca, "MoveLinRelTRF", [0, 0, meca_moveZ, 0, 0, 0]);
     end
 
     if haply_meca_doZero
@@ -53,23 +69,3 @@ while isvalid(controlPanel)
 end
 
 disp("Main: OVER");
-% distance_ref = RangeFinder_getRange(rangeFinder); %Mark the current distance as refference distance
-% rangeFinder_difference = 0; %Initial value
-% 
-% while isvalid(fig) %Loop if the window is there
-%      distance = RangeFinder_getRange(rangeFinder); %Get the current distance
-% 
-%      if(distance > 210 && distance < 590) %The distance limit for the Rangefinder
-%          rangeFinder_difference = distance - distance_ref; %Get the distance difference
-%      end
-%      disp(rangeFinder_difference);
-%          z_axis_WRF = 358 - rangeFinder_difference; %The default pos for z_axis_WRF is 308mm in Meca500
-%     %     Meca500_writeline(meca,"MovePose",[190,0,z_axis_WRF,0,90,90]); %Move to the new location 
-%     pos=HaplyInverse3_writeline(haply,"GetPos",0);
-%     disp([pos(1),pos(2),pos(3)]);
-%     disp("main loop running...");
-%     tic;
-%     while (toc < 0.05)
-%     end
-% end %Close the window to exit the loop
-
