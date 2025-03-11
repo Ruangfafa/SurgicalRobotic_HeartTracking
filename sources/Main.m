@@ -12,7 +12,10 @@ global meca_moveY;
 meca_moveY = 0; %1 / 0 / -1; Control the Meca500 moving on Y-axis.
 
 global meca_moveZ;
-meca_moveY = 0; %1 / 0 / -1; Control the Meca500 moving on Z-axis.
+meca_moveZ = 0; %1 / 0 / -1; Control the Meca500 moving on Z-axis.
+
+global meca_moveZSpeed;
+meca_moveZSpeed = 5; %int; Define the Meca500 moving speed in Z-axis.
 
 global meca_rangefinder_zAxisRelativelyStill;
 meca_rangefinder_zAxisRelativelyStill = false; %True / False; Define the Meca500 will moving relatively still than the heart is z-axis.

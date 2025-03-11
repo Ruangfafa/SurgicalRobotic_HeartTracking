@@ -25,22 +25,7 @@ function t = Meca500_writeline(device,command,data)
             message = readline(device); %return as string format: "[2026][x,y,z,α,β,γ]"
             message_str = extractBetween(message, "[", "]");
             pose = str2num(message_str{2});
-            switch data
-                case "x"
-                    t = pose(1);
-                case "y"
-                    t = pose(2);
-                case "z"
-                    t = pose(3);
-                case "α"
-                    t = pose(4);
-                case "β"
-                    t = pose(5);
-                case "γ"
-                    t = pose(6);
-                otherwise
-                    t = pose;
-            end
+            t = pose;
 
         case "DoZero"
             writeline(meca,'MovePose(190,0,358,0,90,90)');
