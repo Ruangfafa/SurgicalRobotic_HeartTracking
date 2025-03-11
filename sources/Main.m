@@ -14,6 +14,9 @@ meca_moveY = 0; %1 / 0 / -1; Control the Meca500 moving on Y-axis.
 global meca_moveZ;
 meca_moveY = 0; %1 / 0 / -1; Control the Meca500 moving on Z-axis.
 
+global meca_rangefinder_zAxisRelativelyStill;
+meca_rangefinder_zAxisRelativelyStill = false; %True / False; Define the Meca500 will moving relatively still than the heart is z-axis.
+
 global haply_meca_moveOption;
 haply_meca_moveOption = false; %True / False; Define the Meca500 is moving or not relating on Inverse3.
 
