@@ -2,6 +2,7 @@ classdef UIController < ControlUI
     % Intermediator of backend logic and the GUI
     % Catch the user action
     properties
+        m
         uiView
         xRadioButtons
         yRadioButtons
@@ -11,7 +12,8 @@ classdef UIController < ControlUI
     
     methods (Access = public)
         % Constructor - sync global value in Main.m
-        function app = UIController()
+        function app = UIController(fileName, format)
+            m = memmapfile(fileName, 'Format', format, 'Writable', true);
             % uiView = ControlUI();
             % xRadioButtons = {uiView.xMinusButton, uiView.xZeroButton, uiView.xPlusButton};
             % yRadioButtons = {uiView.yMinusButton, uiView.yZeroButton, uiView.yPlusButton};
@@ -64,45 +66,53 @@ classdef UIController < ControlUI
             text = app.xAxisButtonGroup.SelectedObject.Text;
             global meca_moveX
             meca_moveX = syncRadioButtonAndValue(app, text);
+            m.Data.meca_moveX = syncRadioButtonAndValue(app, text);
         end
 
         function moveY(app, event)
             text = app.yAxisButtonGroup.SelectedObject.Text;
             global meca_moveY
             meca_moveY = syncRadioButtonAndValue(app, text);
+            m.Data.meca_moveY = syncRadioButtonAndValue(app, text);
         end
 
         function moveZ(app, event)
             text = app.zAxisButtonGroup.SelectedObject.Text;
             global meca_moveZ
             meca_moveZ = syncRadioButtonAndValue(app, text);
+            m.Data.meca_moveZ = syncRadioButtonAndValue(app, text);
         end
 
         function updateZSpeed(app, event)
             value = app.ZSpeedSlider.Value;
             global meca_moveZSpeed
             meca_moveZSpeed = value;
+            m.Data.moveZSpeed = value;
         end
 
         function doZero(app, event)
             global haply_meca_doZero
             haply_meca_doZero = true;
+            m.Data.haply_meca_doZero = true;
         end
 
         function relativeMotion(app, event) 
             disp(app.MovingRelativelyCheckBox.Value)
             global meca_rangefinder_zAxisRelativelyStill
             meca_rangefinder_zAxisRelativelyStill = app.MovingRelativelyCheckBox.Value;
+            m.Data.meca_rangefinder_zAxisRelativelyStill = app.MovingRelativelyCheckBox.Value;
         end
 
        function useInverse3(app, event)
             global haply_meca_moveOption
             haply_meca_moveOption = app.Inverse3ControlCheckBox.Value;
+            m.Data.haply_meca_moveOption = app.Inverse3ControlCheckBox.Value;
        end
 
        function useConstraint(app, event)
             global haply_meca_constraint
             haply_meca_constraint = app.WithConstraintCheckBox.Value;
+            m.Data.haply_meca_constraint = app.WithConstraintCheckBox.Value;
         end
 
 

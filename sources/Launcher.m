@@ -31,7 +31,7 @@ if isempty(p)
     p = parpool;
 end
 
-controlPanel = UIController();
+controlPanel = UIController(filename, format);
 f = parfeval(@System, 0, fileName, format);
 
 tic
