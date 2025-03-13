@@ -35,7 +35,7 @@ classdef UIController < ControlUI
             app.MovingRelativelyCheckBox.ValueChangedFcn = createCallbackFcn(app, @relativeMotion, true);
             app.Inverse3ControlCheckBox.ValueChangedFcn = createCallbackFcn(app, @useInverse3, true);
             app.WithConstraintCheckBox.ValueChangedFcn = createCallbackFcn(app, @useConstraint, true);
-            
+            app.mecaControl.CloseRequestFcn = createCallbackFcn(app, @closeApp, true);
         end
     % end
     % 
@@ -96,7 +96,12 @@ classdef UIController < ControlUI
 
        function useConstraint(app, event)
             m.Data.haply_meca_constraint = app.WithConstraintCheckBox.Value;
-        end
+       end
+
+       function closeApp(app, event)
+           m.Data.systemOn = 0;
+           delete(app)
+       end
 
 
         function val = syncRadioButtonAndValue(app, text)
