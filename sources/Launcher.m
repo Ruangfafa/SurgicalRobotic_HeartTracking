@@ -31,7 +31,8 @@ if isempty(p)
     p = parpool;
 end
 
-controlPanel = UIController(filename, format);
+controlPanel = UIController(fileName, format);
+drawnow;
 f = parfeval(@System, 0, fileName, format);
 
 tic
@@ -42,5 +43,5 @@ while true
     end
 end
 
-wait(f);
+% wait(f);
 clear m;
