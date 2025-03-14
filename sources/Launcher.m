@@ -9,10 +9,16 @@ format = {
     'double',    [1, 1], 'haply_meca_moveOption';%True / False; Define the Meca500 is moving or not relating on Inverse3.
     'double',    [1, 1], 'haply_meca_constraint';%True / False; Define the Meca500 is moving with a given constraint, otherwise follow the tooltip.
     'double',    [1, 1], 'haply_meca_doZero'%True / False; To zero the Meca500 joints and Inverse3.
+    'double',    [1, 1], 'rangeFinder_range'
 };
 fid = fopen(fileName, 'w+');
-fwrite(fid, zeros(72, 1), 'uint8');
+fwrite(fid, zeros(80, 1), 'uint8');
 fclose(fid);
+
+%========== Setup ==========
+%meca = Meca500_setup(100);
+%haply = HaplyInverse3_setup("COM9");
+%===========================
 
 m = memmapfile(fileName, 'Format', format, 'Writable', true);
 
@@ -25,6 +31,7 @@ m.Data.meca_rangefinder_zAxisRelativelyStill = 0;
 m.Data.haply_meca_moveOption = 0;
 m.Data.haply_meca_constraint = 0;
 m.Data.haply_meca_doZero = 0;
+m.Data.rangeFinder_range = 0;
 
 p = gcp('nocreate');
 if isempty(p)
@@ -33,15 +40,7 @@ end
 
 controlPanel = UIController(fileName, format);
 drawnow;
-f = parfeval(@System, 0, fileName, format);
-
-tic
-while true
-    if toc>=5
-        m.Data.systemOn = 0;
-        break;
-    end
-end
-
-% wait(f);
-clear m;
+f1 = parfeval(@System, 0, fileName, format);
+f2 = parfeval(@RangeFinder_updateRange, 0, fileName, format, "COM4");
+f2 = parfeval(@Data_log, 0, fileName, format);
+clear all;

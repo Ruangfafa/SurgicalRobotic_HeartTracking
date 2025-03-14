@@ -1,7 +1,7 @@
 clear all;
 clear device;
 
-port = "COM3"; %去设备管理器里查一下485转接是占在哪个COM里，如果没有的话说明没装驱动。
+port = "COM4"; %去设备管理器里查一下485转接是占在哪个COM里，如果没有的话说明没装驱动。
 
 %首次配置用cmd检查mode配置是否正确，如果不正确按照下面指令配置。
 %mode COM4: baud=9600/115200 parity=N data=8 stop=1

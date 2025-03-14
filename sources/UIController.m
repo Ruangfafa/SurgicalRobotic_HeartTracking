@@ -13,7 +13,7 @@ classdef UIController < ControlUI
     methods (Access = public)
         % Constructor - sync global value in Main.m
         function app = UIController(fileName, format)
-            m = memmapfile(fileName, 'Format', format, 'Writable', true);
+            app.m = memmapfile(fileName, 'Format', format, 'Writable', true);
             % uiView = ControlUI();
             % xRadioButtons = {uiView.xMinusButton, uiView.xZeroButton, uiView.xPlusButton};
             % yRadioButtons = {uiView.yMinusButton, uiView.yZeroButton, uiView.yPlusButton};
@@ -64,42 +64,41 @@ classdef UIController < ControlUI
 
         function moveX(app, event)
             text = app.xAxisButtonGroup.SelectedObject.Text;
-            m.Data.meca_moveX = syncRadioButtonAndValue(app, text);
+            app.m.Data.meca_moveX = syncRadioButtonAndValue(app, text);
         end
 
         function moveY(app, event)
             text = app.yAxisButtonGroup.SelectedObject.Text;
-            m.Data.meca_moveY = syncRadioButtonAndValue(app, text);
+            app.m.Data.meca_moveY = syncRadioButtonAndValue(app, text);
         end
 
         function moveZ(app, event)
             text = app.zAxisButtonGroup.SelectedObject.Text;
-            m.Data.meca_moveZ = syncRadioButtonAndValue(app, text);
+            app.m.Data.meca_moveZ = syncRadioButtonAndValue(app, text);
         end
 
         function updateZSpeed(app, event)
-            value = app.ZSpeedSlider.Value;
-            m.Data.moveZSpeed = value;
+            app.m.Data.meca_moveZSpeed = app.ZSpeedSlider.Value;
         end
 
         function doZero(app, event)
-            m.Data.haply_meca_doZero = true;
+            app.m.Data.haply_meca_doZero = 1;
         end
 
         function relativeMotion(app, event) 
-            m.Data.meca_rangefinder_zAxisRelativelyStill = app.MovingRelativelyCheckBox.Value;
+            app.m.Data.meca_rangefinder_zAxisRelativelyStill = double(app.MovingRelativelyCheckBox.Value);
         end
 
        function useInverse3(app, event)
-            m.Data.haply_meca_moveOption = app.Inverse3ControlCheckBox.Value;
+            app.m.Data.haply_meca_moveOption = double(app.Inverse3ControlCheckBox.Value);
        end
 
        function useConstraint(app, event)
-            m.Data.haply_meca_constraint = app.WithConstraintCheckBox.Value;
+            app.m.Data.haply_meca_constraint = double(app.WithConstraintCheckBox.Value);
        end
 
        function closeApp(app, event)
-           m.Data.systemOn = 0;
+           app.m.Data.systemOn = 0;
            delete(app)
        end
 
