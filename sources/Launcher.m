@@ -42,5 +42,5 @@ controlPanel = UIController(fileName, format);
 drawnow;
 f1 = parfeval(@System, 0, fileName, format);
 f2 = parfeval(@RangeFinder_updateRange, 0, fileName, format, "COM4");
-f2 = parfeval(@Data_log, 0, fileName, format);
+f3 = parfeval(@Data_log, 0, fileName, format);
 clear all;
