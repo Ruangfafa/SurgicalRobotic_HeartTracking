@@ -1,8 +1,10 @@
 function System(fileName, format)
-    if exist('systemLog.txt', 'file')
-        delete('systemLog.txt');
-    end
-    diary('systemLog.txt');
+    t1 = tic;
+    logFile = 'systemLog.txt';
+    fid = fopen(logFile, 'w');
+    fclose(fid);
+    
+    diary(logFile);
     diary on;
     addpath(fullfile(pwd, 'dependencies'));
     
@@ -15,13 +17,7 @@ function System(fileName, format)
                             -0.2    ,  -0.1     ; 
                             0       ,  0.3      ]; %[MinX, MaxX; MinY, MaxY; MinZ, MaxZ]; Define the workSpace for Inverse3, as a cuboid.
     %===========================
-    
-    %========== Setup ==========
-    %rangeFinder = RangeFinder_setup("COM5", 115200, 8, 1, 2);
-    %meca = Meca500_setup(100);
-    %haply = HaplyInverse3_setup("COM9");
-    %===========================
-    tic;
+
     while m.Data.systemOn
         if m.Data.haply_meca_moveOption && m.Data.haply_meca_constraint
         end
@@ -30,8 +26,6 @@ function System(fileName, format)
         end
     
         if (m.Data.meca_moveX || m.Data.meca_moveY) && ~m.Data.haply_meca_moveOption
-            disp("x Pressed");
-            break;
             %Meca500_writeline(meca, "MoveLinRelWRF", [meca_moveX, meca_moveY, 0, 0, 0, 0]);
         end
     
@@ -44,7 +38,6 @@ function System(fileName, format)
             %HaplyInverse3_writeline(haply, "DoZero", 20);
         end
     end
-    
-    disp(toc);
     disp("System: OVER");
+    disp("Time Spend: " + toc(t1));
     diary off;
