@@ -36,6 +36,8 @@ classdef UIController < ControlUI
             app.Inverse3ControlCheckBox.ValueChangedFcn = createCallbackFcn(app, @useInverse3, true);
             app.WithConstraintCheckBox.ValueChangedFcn = createCallbackFcn(app, @useConstraint, true);
             app.mecaControl.CloseRequestFcn = createCallbackFcn(app, @closeApp, true);
+            app.mecaControl.KeyPressFcn = createCallbackFcn(app, @keyPressControl, true);
+            app.mecaControl.KeyReleaseFcn = createCallbackFcn(app, @keyReleaseControl, true);
         end
     % end
     % 
@@ -110,6 +112,55 @@ classdef UIController < ControlUI
                 val = 1;
             else
                 val = 0;
+            end
+        end
+
+        function keyPressControl(app, event)
+            pressedKey = event.Key;
+            switch pressedKey
+                case 'a'
+                    app.yMinusButton.Value = 1;
+                    moveY(app, event);
+                case 'd'
+                    app.yPlusButton.Value = 1;
+                    moveY(app, event);
+                case 'w'
+                    app.xPlusButton.Value = 1;
+                    moveX(app, event);
+                case 's'
+                    app.xMinusButton.Value = 1;
+                    moveX(app, event);
+                case 'rightarrow'
+                    app.zPlusButton.Value = 1;
+                    moveZ(app, event);
+                case 'leftarrow'
+                    app.zMinusButton.Value = 1;
+                    moveZ(app, event);
+            end
+        end
+
+        function keyReleaseControl(app, event)
+            releasedKey = event.Key;
+            switch releasedKey
+                case 'a'
+                    app.yZeroButton.Value = 1;
+                    moveY(app, event);
+                case 'd'
+                    app.yZeroButton.Value = 1;
+                    moveY(app, event);
+                case 'w'
+                    disp('release w');
+                    app.xZeroButton.Value = 1;
+                    moveX(app, event);
+                case 's'
+                    app.xZeroButton.Value = 1;
+                    moveX(app, event);
+                case 'rightarrow'
+                    app.zZeroButton.Value = 1;
+                    moveZ(app, event);
+                case 'leftarrow'
+                    app.zZeroButton.Value = 1;
+                    moveZ(app, event);
             end
         end
     end
