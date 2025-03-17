@@ -15,11 +15,6 @@ fid = fopen(fileName, 'w+');
 fwrite(fid, zeros(80, 1), 'uint8');
 fclose(fid);
 
-%========== Setup ==========
-%meca = Meca500_setup(100);
-%haply = HaplyInverse3_setup("COM9");
-%===========================
-
 m = memmapfile(fileName, 'Format', format, 'Writable', true);
 
 m.Data.systemOn = 1;

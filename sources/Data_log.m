@@ -7,6 +7,7 @@ function Data_log(fileName, format)
     diary(logFile);
     diary on;
     disp("Data_log: START");
+    disp("Time Spend: " + toc(t1));
     m = memmapfile(fileName, 'Format', format, 'Writable', true);
 
     tempM = [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range];
@@ -21,5 +22,6 @@ function Data_log(fileName, format)
     end
 
     disp("Data_log: OVER");
+    disp("Time Spend: " + toc(t1));
     diary off;
 end
