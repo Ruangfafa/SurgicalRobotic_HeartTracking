@@ -84,7 +84,7 @@ classdef UIController < ControlUI
         end
 
         function doZero(app, event)
-            app.m.Data.haply_meca_doZero = 1;
+            app.m.Data.haply_meca_doZero = [1,1];
         end
 
         function relativeMotion(app, event) 

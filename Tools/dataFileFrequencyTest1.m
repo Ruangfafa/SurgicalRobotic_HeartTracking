@@ -13,21 +13,20 @@ function dataFileFrequencyTest1(fileName, format)
     end
     t1 = tic;
     while m.Data.systemOn == 1
-        % t2 = tic;
+        t2 = tic;
 
-        % if m.Data.int1 == m.Data.int2 && m.Data.int1 == 1
-        %     m.Data.int1 = 0;
-        %     counter = counter+1;
-        % end
-        % if m.Data.int1 == m.Data.int2 && m.Data.int1 == 0
-        %     m.Data.int1 = 1;
-        %     counter = counter+1;
-        % end
+        if m.Data.int1 == m.Data.int2 && m.Data.int1 == 1
+            m.Data.int1 = 0;
+            counter = counter+2;
+        end
+        if m.Data.int1 == m.Data.int2 && m.Data.int1 == 0
+            m.Data.int1 = 1;
+            counter = counter+2;
+        end
 
-        counter = counter+1;
         % while toc(t2)<0.05
         % end
-        if toc(t1) >= 1
+        if toc(t1) >= 10
             m.Data.systemOn = 0;
         end
     end
