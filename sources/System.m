@@ -16,7 +16,7 @@ function System(fileName, format)
     haply_workSpace = [     -0.05   ,  0.135    ; 
                             -0.2    ,  -0.1     ; 
                             0       ,  0.3      ]; %[MinX, MaxX; MinY, MaxY; MinZ, MaxZ]; Define the workSpace for Inverse3, as a cuboid.
-    mecaPose = [190,0,308,0,90,0];
+    mecaPose = [190,0,308,0,pi/2,0];
     %===========================
     
     while m.Data.systemOn
@@ -27,11 +27,11 @@ function System(fileName, format)
         if m.Data.haply_meca_moveOption && ~m.Data.haply_meca_constraint
             %const = []; %0.0425 -0.15 0.15, 190 0 308
         end
-    
         if (m.Data.meca_moveX || m.Data.meca_moveY) && ~m.Data.haply_meca_moveOption
             %Meca500_writeline(meca, "MoveLinRelWRF", [meca_moveX, meca_moveY, 0, 0, 0, 0]);
             mecaPose(1) = mecaPose(1) + m.Data.meca_moveX;
             mecaPose(2) = mecaPose(2) + m.Data.meca_moveY;
+            disp("hi");
 
 
         end
@@ -45,9 +45,9 @@ function System(fileName, format)
         if m.Data.haply_meca_doZero
             while any(m.Data.haply_meca_doZero == 1)
             end
-            mecaPose = [190,0,308,0,90,0];
+            mecaPose = [190,0,308,0,pi/2,0];
         end
-        m.Data.meca_joints = wristRefInvKin(mecaPose);
+        m.Data.meca_joints = wristRefInvKin(mecaPose.');
     end
     disp("System: OVER");
     disp("Time Spend: " + toc(t1));

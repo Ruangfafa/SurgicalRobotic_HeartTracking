@@ -19,7 +19,7 @@ function Meca500_updateJoint(fileName, format)
             Meca500_writeline(meca, "DoZero", 0);
             while true
                 zero = Meca500_writeline(meca, "GetPose", 0);
-                if zero == [190,0,358,0,90,0]
+                if zero == [190,0,308,0,pi/2,0]
                     m.Data.haply_meca_doZero(1) = 0;
                     break;
                 end
@@ -28,9 +28,12 @@ function Meca500_updateJoint(fileName, format)
     end
     
     Meca500_writeline(meca, "MoveJoints", zeros(1,6));
+
+    robot.delete();
     disp("Meca500_updateJoint: OVER");
     disp("Time Spend: " + toc(t1));
     
     diary off;
+    
 end
 

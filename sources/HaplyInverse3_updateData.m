@@ -20,7 +20,7 @@ function HaplyInverse3_updateData(fileName, format, COM)
         if(m.Data.haply_meca_doZero(2))
             HaplyInverse3_writeline(haply, "DoZero", 20);
             m.Data.haply_meca_doZero(2) = 0;
-        pause(0.0005);
+        pause(0.05);
     end
     
     disp("HaplyInverse3_updateData: OVER");
