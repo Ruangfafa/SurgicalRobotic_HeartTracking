@@ -9,6 +9,7 @@ function RangeFinder_updateRange(fileName, format, COM)
     %rangeFinder = RangeFinder_setup(COM, 115200, 8, 1, 2);
     m = memmapfile(fileName, 'Format', format, 'Writable', true);
     disp("RangeFinder: START");
+    disp("Time Spend: " + toc(t1));
     while m.Data.systemOn
         m.Data.rangeFinder_range = 0;
         % try

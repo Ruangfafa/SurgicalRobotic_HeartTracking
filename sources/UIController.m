@@ -130,10 +130,10 @@ classdef UIController < ControlUI
                 case 's'
                     app.xMinusButton.Value = 1;
                     moveX(app, event);
-                case 'rightarrow'
+                case 'uparrow'
                     app.zPlusButton.Value = 1;
                     moveZ(app, event);
-                case 'leftarrow'
+                case 'downarrow'
                     app.zMinusButton.Value = 1;
                     moveZ(app, event);
             end
@@ -149,16 +149,15 @@ classdef UIController < ControlUI
                     app.yZeroButton.Value = 1;
                     moveY(app, event);
                 case 'w'
-                    disp('release w');
                     app.xZeroButton.Value = 1;
                     moveX(app, event);
                 case 's'
                     app.xZeroButton.Value = 1;
                     moveX(app, event);
-                case 'rightarrow'
+                case 'uparrow'
                     app.zZeroButton.Value = 1;
                     moveZ(app, event);
-                case 'leftarrow'
+                case 'downarrow'
                     app.zZeroButton.Value = 1;
                     moveZ(app, event);
             end
