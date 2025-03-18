@@ -24,12 +24,12 @@ function System(fileName, format)
     %===========================
     
     while m.Data.systemOn
-        pos = HaplyInverse3_writeline(haply, "GetPos");
+        %pos = HaplyInverse3_writeline(haply, "GetPos");
         if m.Data.haply_meca_moveOption && m.Data.haply_meca_constraint
         end
     
         if m.Data.haply_meca_moveOption && ~m.Data.haply_meca_constraint
-            const = []; %0.0425 -0.15 0.15, 190 0 308
+            %const = []; %0.0425 -0.15 0.15, 190 0 308
         end
     
         if (m.Data.meca_moveX || m.Data.meca_moveY) && ~m.Data.haply_meca_moveOption
