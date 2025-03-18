@@ -4,6 +4,11 @@ function t = Meca500_writeline(device,command,data)
             input = sprintf("MovePose(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
             writeline(device, input);
             t = 1;
+        
+        case "MoveJoints"
+            input = sprintf("MoveJoints(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
+            writeline(device, input);
+            t = 1;
 
         case "MoveLinRelWRF"
             input = sprintf("MoveLinRelWRF(%f,%f,%f,%f,%f,%f)", data(1), data(2), data(3), data(4), data(5), data(6));
@@ -28,7 +33,7 @@ function t = Meca500_writeline(device,command,data)
             t = pose;
 
         case "DoZero"
-            writeline(device,'MovePose(190,0,358,0,90,90)');
+            writeline(device,'MovePose(190,0,358,0,90,0)');
 
         otherwise
             error("Meca500: Unknown command %s%s%s (Meca500_writeline.m)", char(34), command, char(34));

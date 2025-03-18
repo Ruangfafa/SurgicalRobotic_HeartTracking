@@ -10,14 +10,14 @@ function Data_log(fileName, format)
     disp("Time Spend: " + toc(t1));
     m = memmapfile(fileName, 'Format', format, 'Writable', true);
 
-    tempM = [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range];
+    tempM = [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_joints,m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range];
     fprintf('Elapsed time: %.3f seconds\n', toc(t1));
-    disp([m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range]);
+    disp([m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_joints, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range]);
     while m.Data.systemOn
-        if ~isequal(tempM, [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range])
+        if ~isequal(tempM, [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_joints, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range])
             fprintf('Elapsed time: %.3f seconds\n', toc(t1));
-            disp([m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range]);
-            tempM = [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range];
+            disp([m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_joints, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range]);
+            tempM = [m.Data.systemOn, m.Data.meca_moveX, m.Data.meca_joints, m.Data.meca_moveY, m.Data.meca_moveZ, m.Data.meca_moveZSpeed, m.Data.meca_rangefinder_zAxisRelativelyStill, m.Data.haply_meca_moveOption, m.Data.haply_meca_constraint, m.Data.haply_meca_doZero, m.Data.rangeFinder_range];
         end
     end
 

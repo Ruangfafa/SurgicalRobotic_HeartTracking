@@ -8,7 +8,7 @@ function RangeFinder_updateRange(fileName, format, COM)
     diary on;
     %rangeFinder = RangeFinder_setup(COM, 115200, 8, 1, 2);
     m = memmapfile(fileName, 'Format', format, 'Writable', true);
-    disp("RangeFinder: START");
+    disp("RangeFinder_updateRangeLog: START");
     disp("Time Spend: " + toc(t1));
     while m.Data.systemOn
         m.Data.rangeFinder_range = 0;
@@ -28,7 +28,7 @@ function RangeFinder_updateRange(fileName, format, COM)
         %     disp("ERROR: RangeFinder_getRange.m");
         % end
     end
-    disp("RangeFinder: OVER");
+    disp("RangeFinder_updateRangeLog: OVER");
     disp("Time Spend: " + toc(t1));
     
     diary off;

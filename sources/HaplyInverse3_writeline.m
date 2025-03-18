@@ -13,25 +13,28 @@ function t = HaplyInverse3_writeline(device,command)
         case "DoZero"
             global haply_workSpace;
             request = zeros(3,1);
-            k = data;
+            k = 50;
             zeroX = mean(haply_workSpace(1, :));
             zeroY = mean(haply_workSpace(2, :));
             zeroZ = mean(haply_workSpace(3, :));
 
             while true
-                [pos, vel] = robot.EndEffectorForce(request);
+                [pos, vel] = device.EndEffectorForce(request);
                 request(1) = k*(zeroX-pos(1));
                 request(2) = k*(zeroY-pos(2));
                 request(3) = k*(zeroZ-pos(3));
 
+                    disp(abs(pos - [zeroX, zeroY, zeroZ]));
                 if all(abs(pos - [zeroX, zeroY, zeroZ]) < 0.0005) %error= ±0.5mm.
-                    tic;
-                    while toc <= 3
-                        % we wait. 
-                    end
-                    if all(abs(pos - [zeroX, zeroY, zeroZ]) < 0.0005) %error= ±0.5mm.
-                        break;
-                    end
+                    disp("stop");
+                    % tic;
+                    % while toc <= 3
+                    %     % we wait. 
+                    % end
+                    % if all(abs(pos - [zeroX, zeroY, zeroZ]) < 0.0005) %error= ±0.5mm.
+                    %     break;
+                    % end
+                    break;
                 end
 
                 tic;

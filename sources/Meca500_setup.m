@@ -9,7 +9,7 @@ function t = Meca500_setup(vel)
     writeline(t,'ResetError');
     writeline(t,'SetEOB(0)');
     get(t,{ 'RemoteHost','RemotePort'}) %'Name','RemoteHost','RemotePort','Type'
-    writeline(t,'MovePose(190,0,358,0,90,90)');
+    writeline(t,'MovePose(190,0,308,0,90,0)');
     command = sprintf("SetJointVel(%f)", vel);
     writeline(t,command);
     disp("Meca500: Ready");
