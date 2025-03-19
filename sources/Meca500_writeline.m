@@ -33,7 +33,7 @@ function t = Meca500_writeline(device,command,data)
             t = pose;
 
         case "DoZero"
-            writeline(device,'MovePose(190,0,358,0,90,0)');
+            writeline(device,'MoveJoints(0,0,0,0,0,0)');
 
         otherwise
             error("Meca500: Unknown command %s%s%s (Meca500_writeline.m)", char(34), command, char(34));
