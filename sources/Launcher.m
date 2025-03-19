@@ -14,7 +14,7 @@ format = {
     'double',    [1, 3], 'haply_pos';
     'double',    [1, 3], 'haply_vel';
 };
-fid = fopen(fileName, 'w+');
+fid = fopen(fileName, 'w');
 fwrite(fid, zeros(184, 1), 'uint8');
 fclose(fid);
 
@@ -44,6 +44,5 @@ drawnow;
 f1 = parfeval(@System, 0, fileName, format);
 f2 = parfeval(@RangeFinder_updateRange, 0, fileName, format, "COM5");
 f3 = parfeval(@Meca500_updateJoint, 0, fileName, format);
-f4 = parfeval(@HaplyInverse3_updateData, 0, fileName, format, "COM6");
+f4 = parfeval(@HaplyInverse3_updateData, 0, fileName, format, "COM10");
 f5 = parfeval(@Data_log, 0, fileName, format);
-clear all;

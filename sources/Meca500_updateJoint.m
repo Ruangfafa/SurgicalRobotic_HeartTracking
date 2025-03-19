@@ -17,13 +17,7 @@ function Meca500_updateJoint(fileName, format)
         Meca500_writeline(meca, "MoveJoints", m.Data.meca_joints);
         if m.Data.haply_meca_doZero(1) 
             Meca500_writeline(meca, "DoZero", 0);
-            while true
-                zero = Meca500_writeline(meca, "GetPose", 0);
-                if zero == [190,0,308,0,pi/2,0]
-                    m.Data.haply_meca_doZero(1) = 0;
-                    break;
-                end
-            end
+            m.Data.haply_meca_doZero(1) = 0;
         end
     end
     
