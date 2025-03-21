@@ -30,7 +30,6 @@ function System(fileName, format)
             %Meca500_writeline(meca, "MoveLinRelWRF", [meca_moveX, meca_moveY, 0, 0, 0, 0]);
             mecaPose(1) = mecaPose(1) + m.Data.meca_moveX;
             mecaPose(2) = mecaPose(2) + m.Data.meca_moveY;
-            disp("hi");
 
 
         end
