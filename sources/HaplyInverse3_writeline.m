@@ -24,47 +24,65 @@ function t = HaplyInverse3_writeline(device,command)
 
         case "DoZero"
             request = zeros(3,1);
-            k = 50;
-            zeroX = mean(haply_workSpace(1, :));
-            zeroY = mean(haply_workSpace(2, :));
-            zeroZ = mean(haply_workSpace(3, :));
-            disp("do zero");
+            zeta = 20;
+            dg = 0.0015;
+            zeroPos = mean(haply_workSpace, 2);
+        
             while true
-            disp("do zero loop");
                 [pos, vel] = device.EndEffectorForce(request);
-                request(1) = k*(zeroX-pos(1));
-                request(2) = k*(zeroY-pos(2));
-                request(3) = k*(zeroZ-pos(3));
-
-                    disp(pos(1) - zeroX);
-                    disp(pos(2) - zeroY);
-                    disp(pos(3) - zeroZ);
-                if pos(1) - zeroX < 0.0005 && pos(2) - zeroY  < 0.0005 && pos(3) - zeroZ < 0.0005 %error= ±0.5mm.
-                    tic;
-                    while toc <= 3
+                d = norm(pos - zeroPos);
+        
+                if d > dg
+                    request = zeta * (zeroPos - pos) / (d * dg);
+                else
+                    request = zeta * (zeroPos - pos);
+                end
+                if d < 0.0015
+                    t2 = tic;
+                    while toc(t2) <= 3
                         [pos, vel] = device.EndEffectorForce(request);
-                        request(1) = k*(zeroX-pos(1));
-                        request(2) = k*(zeroY-pos(2));
-                        request(3) = k*(zeroZ-pos(3));
-                        % we wait. 
+                        request = zeta * (zeroPos - pos);
                     end
-                    if pos(1) - zeroX < 0.0015 && pos(2) - zeroY  < 0.0015 &&pos(3) - zeroZ < 0.0015 %error= ±0.5mm.
-                    disp("stop");
-                        t=1;
+                    if norm(pos - zeroPos) < 0.0015
                         break;
                     end
                 end
-
-                tic;
-                while toc <= 0.005
-                    % we wait. 
-                end
+        
+                pause(0.005);
             end
 
+
+            % request = zeros(3,1);
+            % k = 50;
+            % zeroX = mean(haply_workSpace(1, :));
+            % zeroY = mean(haply_workSpace(2, :));
+            % zeroZ = mean(haply_workSpace(3, :));
+            % disp("do zero");
+            % while true
+            %     [pos, vel] = device.EndEffectorForce(request);
+            %     request(1) = k*(zeroX-pos(1));
+            %     request(2) = k*(zeroY-pos(2));
+            %     request(3) = k*(zeroZ-pos(3));
+            %     if pos(1) - zeroX < 0.0005 && pos(2) - zeroY  < 0.0005 && pos(3) - zeroZ < 0.0005 %error= ±0.5mm.
+            %         tic;
+            %         while toc <= 3
+            %             [pos, vel] = device.EndEffectorForce(request);
+            %             request(1) = k*(zeroX-pos(1));
+            %             request(2) = k*(zeroY-pos(2));
+            %             request(3) = k*(zeroZ-pos(3)); 
+            %         end
+            %         if pos(1) - zeroX < 0.0015 && pos(2) - zeroY  < 0.0015 &&pos(3) - zeroZ < 0.0015 %error= ±0.5mm.
+            %         disp("stop");
+            %             t=1;
+            %             break;
+            %         end
+            %     end
+            %     pause(0.05);
+            % end
+
         otherwise
-            t  =0;
+            t = 0;
             error("HaplyInverse3: Unknown command %s%s%s (HaplyInverse3_writeline.m)", char(34), command, char(34));
     end
-disp(t);
     diary off;   
 
