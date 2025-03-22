@@ -17,19 +17,10 @@ function HaplyInverse3_updateData(fileName, format, COM)
     disp("Time Spend: " + toc(t1));
 
     while m.Data.systemOn
-    disp(m.Data.haply_pos);
-
-    % [pos, vel] = haply.EndEffectorForce(zeros(3,1));
-    % disp(pos);
-    % temp = [max(haply_workSpace(1,1), min(haply_workSpace(1,2), pos(1))),max(haply_workSpace(2,1), min(haply_workSpace(2,2), pos(2))),max(haply_workSpace(3,1), min(haply_workSpace(3,2), pos(3)))]
-    temp = HaplyInverse3_writeline(haply, "GetPos")
-    disp(temp);
-    m.Data.haply_pos(1) = temp(1); 
-    m.Data.haply_pos(2) = temp(2); 
-    m.Data.haply_pos(3) = temp(3); 
-    disp(m.Data.haply_pos);
-
-            disp("looping");
+        pos = HaplyInverse3_writeline(haply, "GetPos")
+        m.Data.haply_pos(1) = pos(1); 
+        m.Data.haply_pos(2) = pos(2); 
+        m.Data.haply_pos(3) = pos(3); 
         if(m.Data.haply_meca_doZero(2))
             disp("dozero");
             eric = HaplyInverse3_writeline(haply, "DoZero")
