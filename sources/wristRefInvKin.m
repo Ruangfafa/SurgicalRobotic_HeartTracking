@@ -1,5 +1,6 @@
 function q = wristRefInvKin(pose)
 desired = wristVector(pose);
+
 gain = 0.01;
 error = 10.0;
 thetaPrev = [0;0;0;0;0;0];
@@ -7,6 +8,7 @@ currentPosn = wristFwdKin(thetaPrev);
 feedback = wristVector(currentPosn);
 tic
 while norm(error)>0.075||toc<0.01
+
     error = desired-feedback;
     Jinv = wristInvJacobian(thetaPrev,error*gain);
     theta = Jinv+thetaPrev;
@@ -15,7 +17,9 @@ while norm(error)>0.075||toc<0.01
     theta = [theta(1,1);theta(2,1);theta(3,1);theta(4,1);theta(5,1);theta(6,1)+(pose(6,1)-eulers(3,1))];
     theta = [theta(1,1);theta(2,1);theta(3,1);theta(4,1);theta(5,1);theta(6,1)+(pose(4,1)-eulers(1,1))];
     currentPosn = wristFwdKin(theta);
+
     feedback = wristVector(currentPosn);
+
     error = desired-feedback;
 end
 q = double(theta*(180/pi));

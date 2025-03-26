@@ -3,6 +3,7 @@ function t = frameTramsformationMoveZ(mecaPose, meca_moveZ)
     beta  = mecaPose(5);
     gamma = mecaPose(6);
 
+
     Rz = [cos(gamma), -sin(gamma), 0;
           sin(gamma),  cos(gamma), 0;
           0,           0,          1];
@@ -15,15 +16,16 @@ function t = frameTramsformationMoveZ(mecaPose, meca_moveZ)
           0, cos(alpha), -sin(alpha);
           0, sin(alpha), cos(alpha)];
 
-    R = Rz * Ry * Rx;
+    R = Rx * Ry * Rz;
+
 
     moveZ_vector = [1; 0; 0];
 
     moveZ_transformed = R * moveZ_vector * meca_moveZ;
 
-    mecaPose(1) = mecaPose(1) + moveZ_transformed(1);
-    mecaPose(2) = mecaPose(2) + moveZ_transformed(2);
-    mecaPose(3) = mecaPose(3) + moveZ_transformed(3);
+    mecaPose(1) = mecaPose(1) - moveZ_transformed(1);
+    mecaPose(2) = mecaPose(2) - moveZ_transformed(2);
+    mecaPose(3) = mecaPose(3) - moveZ_transformed(3);
 
     t = mecaPose;
     

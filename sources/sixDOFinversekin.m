@@ -9,6 +9,8 @@ error = 10.0;
 theta_prev = zeros(6,1);
 %% Assign 'current_posn' to the returned value of the forward kinamatics function
 current_Posn = needleConstrainedFwdKin(posn,constraint,theta_prev);
+disp("pos in 6");
+disp(current_Posn);
 while norm(error)>0.01 %condition
     %% Reassign error value
     %error = position-feedback;
