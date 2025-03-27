@@ -24,7 +24,7 @@ function t = HaplyInverse3_writeline(device,command)
 
         case "DoZero"
             request = zeros(3,1);
-            zeta = 20;
+            zeta = 1;
             dg = 0.0015;
             zeroPos = mean(haply_workSpace, 2);
         
@@ -33,7 +33,7 @@ function t = HaplyInverse3_writeline(device,command)
                 d = norm(pos - zeroPos);
         
                 if d > dg
-                    request = zeta * (zeroPos - pos) / (d * dg);
+                    request = zeta * (zeroPos - pos) / (d);
                 else
                     request = zeta * (zeroPos - pos);
                 end

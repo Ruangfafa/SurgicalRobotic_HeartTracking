@@ -1,3 +1,6 @@
+clear all;
+clc;
+
 fileName = fullfile(pwd, 'data.dat');
 format = {
     'double',    [1, 1], 'systemOn';
@@ -44,5 +47,5 @@ drawnow;
 f1 = parfeval(@System, 0, fileName, format);
 f2 = parfeval(@RangeFinder_updateRange, 0, fileName, format, "COM5");
 f3 = parfeval(@Meca500_updateJoint, 0, fileName, format);
-f4 = parfeval(@HaplyInverse3_updateData, 0, fileName, format, "COM10");
+f4 = parfeval(@HaplyInverse3_updateData, 0, fileName, format, "COM4");
 f5 = parfeval(@Data_log, 0, fileName, format);
