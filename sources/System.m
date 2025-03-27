@@ -51,11 +51,18 @@ function System(fileName, format)
                     disp("constz");
                     disp(constZ);
                     setZ = 0;
+                    deltaZ = 0;
                 end
-                deltaZ = m.Data.rangeFinder_range - constZ;
+                temp = 0;
+                if m.Data.rangeFinder_range == temp
+                    deltaZ = 0;
+                elseif abs(m.Data.rangeFinder_range - constZ) <= 50 && abs(m.Data.rangeFinder_range - constZ) >= 15
+                    temp = m.Data.rangeFinder_range;
+                    deltaZ = max([min([m.Data.rangeFinder_range - constZ,0.7]),-0.7]);
+                end
                 disp("deltaz");
                 disp(deltaZ);
-                mecaPose = frameTramsformationMoveZ(mecaPose,deltaZ);
+                mecaPose = frameTramsformationMoveZ(mecaPose,-deltaZ);
                 disp(mecaPose);
             else
                 setZ = 1;
