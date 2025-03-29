@@ -33,6 +33,8 @@ function t = Meca500_writeline(device,command,data)
             t = pose;
 
         case "DoZero"
+            input = sprintf("SetJointVel(%f)", max(0, min(100, data)));
+            writeline(device, input);
             writeline(device,'MoveJoints(0,0,0,0,0,0)');
 
         otherwise

@@ -1,21 +1,11 @@
 function t = HaplyInverse3_writeline(device,command)
-    t1 = tic;
-    logFile = 'HaplyInverse3_writelineLog.txt';
-    fid = fopen(logFile, 'w');
-    fclose(fid);
-    
-    diary(logFile);
-    diary on;    
-    
-    haply_workSpace = [     -0.05   ,  0.135    ; 
+haply_workSpace = [     -0.05   ,  0.135    ; 
                                 -0.2    ,  -0.1     ; 
                                 0       ,  0.3      ];
     switch command
         case "GetPos"
-            disp("123");
             %-0.05~0.135,-0.1~-0.2,0~0.3
             [pos, vel] = device.EndEffectorForce(zeros(3,1));
-            disp("123");
             t = [max(haply_workSpace(1,1), min(haply_workSpace(1,2), pos(1)));max(haply_workSpace(2,1), min(haply_workSpace(2,2), pos(2)));max(haply_workSpace(3,1), min(haply_workSpace(3,2), pos(3)))];
             disp(t);
         case "GetVel"
@@ -24,8 +14,8 @@ function t = HaplyInverse3_writeline(device,command)
 
         case "DoZero"
             request = zeros(3,1);
-            zeta = 1;
-            dg = 0.0015;
+            zeta = 2;
+            dg = 0.006;
             zeroPos = mean(haply_workSpace, 2);
         
             while true
@@ -35,15 +25,21 @@ function t = HaplyInverse3_writeline(device,command)
                 if d > dg
                     request = zeta * (zeroPos - pos) / (d);
                 else
-                    request = zeta * (zeroPos - pos);
+                    request = 20 * (zeroPos - pos);
                 end
-                if d < 0.0015
+                if d < 0.003
                     t2 = tic;
-                    while toc(t2) <= 3
+                    while toc(t2) <= 1
                         [pos, vel] = device.EndEffectorForce(request);
-                        request = zeta * (zeroPos - pos);
+                        d = norm(pos - zeroPos);
+                        if d > dg
+                            request = zeta * (zeroPos - pos) / (d);
+                        else
+                            request = 20 * (zeroPos - pos);
+                        end
                     end
-                    if norm(pos - zeroPos) < 0.0015
+                    if norm(pos - zeroPos) < 0.004
+                        t = 0;
                         break;
                     end
                 end
@@ -83,6 +79,5 @@ function t = HaplyInverse3_writeline(device,command)
         otherwise
             t = 0;
             error("HaplyInverse3: Unknown command %s%s%s (HaplyInverse3_writeline.m)", char(34), command, char(34));
-    end
-    diary off;   
+    end 
 
